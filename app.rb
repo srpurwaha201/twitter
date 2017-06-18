@@ -18,6 +18,7 @@ class Tweet
 	property :id,	Serial
 	property :tweet,	String
 	property :user_id,	Numeric
+	property :likecount, Numeric
 
 end
 
@@ -93,6 +94,7 @@ post '/addTweet' do
 	new_tweet = Tweet.new
 	new_tweet.tweet = params["tweet"]
 	new_tweet.user_id = session[:user_id]
+	new_tweet.likecount = 0
 	new_tweet.save
 	return redirect '/'
 end
@@ -101,12 +103,15 @@ post '/togglelike' do
 	tweet_id = params["tweet_id"]
 	user_id = session[:user_id]
 	like = Like.all(user_id: user_id, tweet_id: tweet_id).first
+	tweet = Tweet.get(tweet_id)
 	if like
 		like.destroy
+		tweet.update(likecount: tweet.likecount.to_i - 1)
 	else
 		like = Like.new
 		like.tweet_id = tweet_id
 		like.user_id = user_id
+		tweet.update(likecount: tweet.likecount.to_i + 1)
 		like.save
 	end
 	return redirect '/'

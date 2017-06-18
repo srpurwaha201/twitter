@@ -12,8 +12,9 @@
 	<br>
 	<% tweets.each do |tweet| %>
 	<form action = "/togglelike" method = "post"> 
-	<p> <%= User.get(tweet.user_id).email %> <br>
+	<p><%= User.get(tweet.user_id).email %>:<br> 
 	<%= tweet.tweet %>
+	Likes : <%= tweet.likecount%>
 	<% if Like.all(user_id: session[:user_id], tweet_id: tweet.id).first.nil? %>
 	<input type = "submit" value = "Like">
 	<% else %>
