@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+	<form action="/addTweet" method="Post">
+	<input type="text" name="tweet">
+	<input type="submit" value="Tweet">
+	<a href = "/signout">Sign Out</a>
+	</form>
+	<br>
+	<% tweets.each do |tweet| %>
+	<p> <%= User.get(tweet.user_id).email %> <br>
+	<%= tweet.tweet %>
+	</p>
+	<% end %>
+</body>
+</html>
