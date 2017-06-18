@@ -29,7 +29,7 @@ get '/' do
 	if session[:user_id].nil?
 		return redirect '/signin'
 	else
-		tweets = Tweet.all
+		tweets = Tweet.all(:order => [ :id.desc ])
 		erb :index, locals: {id: session[:user_id], tweets: tweets}
 	end
 end
