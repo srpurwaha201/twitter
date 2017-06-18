@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'data_mapper'
 DataMapper.setup(:default, 'sqlite:///'+Dir.pwd+'/project.db')
+set :bind, '0.0.0.0'
 
 class User
 	include DataMapper::Resource
@@ -17,6 +18,15 @@ class Tweet
 	property :id,	Serial
 	property :tweet,	String
 	property :user_id,	Numeric
+
+end
+
+class Like
+	include DataMapper::Resource
+
+	property :id,	Serial
+	property :user_id,	Numeric
+	property :tweet_id, Numeric
 
 end
 
@@ -87,6 +97,20 @@ post '/addTweet' do
 	return redirect '/'
 end
 
+post '/togglelike' do
+	tweet_id = params["tweet_id"]
+	user_id = session[:user_id]
+	like = Like.all(user_id: user_id, tweet_id: tweet_id).first
+	if like
+		like.destroy
+	else
+		like = Like.new
+		like.tweet_id = tweet_id
+		like.user_id = user_id
+		like.save
+	end
+	return redirect '/'
+end
 
 
 

@@ -11,9 +11,18 @@
 	</form>
 	<br>
 	<% tweets.each do |tweet| %>
+	<form action = "/togglelike" method = "post"> 
 	<p> <%= User.get(tweet.user_id).email %> <br>
 	<%= tweet.tweet %>
-	</p>
+	<% if Like.all(user_id: session[:user_id], tweet_id: tweet.id).first.nil? %>
+	<input type = "submit" value = "Like">
+	<% else %>
+	<input type = "submit" value = "Unlike">
 	<% end %>
+	<input type = "hidden" value = "<%= tweet.id %>" name = "tweet_id">
+	</p>
+	</form>
+	<% end %>
+	
 </body>
 </html>
