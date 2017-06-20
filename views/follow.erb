@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Follow</title>
+</head>
+<body>
+<h3>Follow : </h3>
+	<a href = '/'>Return</a>
+	<%User.all.each do |user|%>
+		<%= user.email %>
+		<form action='/togglefollow' method = "post">
+		<input type = "hidden" name="user_id" value = "<%=user.id%>">
+		<%if Follow.all(user_id: user.id, follower_id: session[:user_id]).first %>
+			<input type = "submit" value = "unfollow">
+		<%else%>
+			<input type = "submit" value = "follow">
+		<%end%>
+		</form>
+		<%end%>
+</body>
+</html>

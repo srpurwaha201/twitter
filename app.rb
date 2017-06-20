@@ -10,6 +10,19 @@ class User
 	property :email, String
 	property :password,	String
 
+
+	def get_tweets
+		tweets = []
+		following = Follow.all(follower_id: id)
+		following.each do|user|
+			tweet = Tweet.get(user.user_id)
+			if tweet
+				tweets<<tweet
+			end
+		end
+		tweets
+	end
+
 end
 
 class Tweet
@@ -31,6 +44,15 @@ class Like
 
 end
 
+class Follow
+	include DataMapper::Resource
+
+	property :id,	Serial
+	property :user_id,	Numeric
+	property :follower_id,	Numeric
+
+end
+
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
@@ -40,7 +62,8 @@ get '/' do
 	if session[:user_id].nil?
 		return redirect '/signin'
 	else
-		tweets = Tweet.all(:order => [ :id.desc ])
+		user = User.get(session[:user_id])
+		tweets = user.get_tweets
 		erb :index, locals: {id: session[:user_id], tweets: tweets}
 	end
 end
@@ -116,6 +139,31 @@ post '/togglelike' do
 	end
 	return redirect '/'
 end
+
+post '/togglefollow' do
+	user_id = params["user_id"]
+	follower_id = session[:user_id]
+	follow = Follow.all(user_id: user_id, follower_id: follower_id).first
+	if follow
+		follow.destroy
+	else
+		follow = Follow.new
+		follow.user_id = user_id
+		follow.follower_id = follower_id
+		follow.save
+	end
+	return redirect '/togglefollow'
+end
+
+get '/follow' do
+	erb :follow
+end
+
+get '/togglefollow' do
+	erb :follow
+end
+
+
 
 
 
