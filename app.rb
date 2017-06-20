@@ -3,6 +3,8 @@ require 'data_mapper'
 DataMapper.setup(:default, 'sqlite:///'+Dir.pwd+'/project.db')
 set :bind, '0.0.0.0'
 
+#set :public_folder, File.dirname(__FILE__) + '/assets'
+
 class User
 	include DataMapper::Resource
 

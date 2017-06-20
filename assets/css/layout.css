@@ -1,0 +1,16 @@
+div {
+	background-color: white;
+	box-shadow: 10px 10px 3px 1px #999;
+	margin-left: 30%;
+	width: 30em;
+	padding: 30px;
+
+}
+body {
+	background-color: rgb(51, 153, 255);
+}
+
+input {
+	display: block;
+	margin-bottom: 10px;
+}

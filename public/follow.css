@@ -1,0 +1,25 @@
+.font{
+	text-align: center;
+}
+
+div {
+	box-shadow: 10px 10px 15px -15px #999;
+	width: 30em;
+	padding: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3em;
+}
+
+.return{
+	display: block;
+	position:absolute;
+   top:0;
+   right:10em;
+   margin: 2em;
+}
+
+.followtoggle{
+	position: absolute;
+	right: 33em;
+}
