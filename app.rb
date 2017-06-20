@@ -15,9 +15,13 @@ class User
 		tweets = []
 		following = Follow.all(follower_id: id)
 		following.each do|user|
-			tweet = Tweet.get(user.user_id)
-			if tweet
-				tweets<<tweet
+			tweetbyuser = Tweet.all(user_id: user.user_id)
+			if tweetbyuser
+				tweetbyuser.each do |tweet|
+					if tweet
+						tweets<<tweet
+					end
+				end
 			end
 		end
 		tweets
@@ -68,7 +72,7 @@ get '/' do
 	else
 		user = User.get(session[:user_id])
 		tweets = user.get_tweets
-		erb :index, locals: {id: session[:user_id], tweets: tweets}
+		erb :index, locals: {id: session[:user_id], tweets: tweets}, layout: false
 	end
 end
 
@@ -160,11 +164,11 @@ post '/togglefollow' do
 end
 
 get '/follow' do
-	erb :follow
+	erb :follow, layout: false
 end
 
 get '/togglefollow' do
-	erb :follow
+	erb :follow, layout: false
 end
 
 
