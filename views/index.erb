@@ -6,10 +6,10 @@
 <body>
 	<h2> Welcome <%= User.get(session[:user_id]).email %></h2>
 	<form action="/addTweet" method="Post">
-	<input type="text" name="tweet">
+	<textarea rows="4" cols="50" name="tweet"></textarea>
 	<input type="submit" value="Tweet">
-	<a href = "/signout">Sign Out</a>
 	<a href = "/follow">Follow</a>
+	<a href = "/signout">Sign Out</a>
 	</form>
 	<br>
 	<% tweets.each do |tweet| %>
