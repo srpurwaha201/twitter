@@ -5,9 +5,11 @@
 </head>
 <body>
 <h3>Follow : </h3>
-	<a href = '/'>Return</a>
+	<a href = '/'>Return</a><br>
 	<%User.all.each do |user|%>
 		<%= user.email %>
+		Followers : 
+		<%=user.get_fcount%>
 		<form action='/togglefollow' method = "post">
 		<input type = "hidden" name="user_id" value = "<%=user.id%>">
 		<%if Follow.all(user_id: user.id, follower_id: session[:user_id]).first %>

@@ -23,6 +23,9 @@ class User
 		tweets
 	end
 
+	def get_fcount
+		Follow.all(user_id: id).count
+	end
 end
 
 class Tweet
@@ -50,6 +53,7 @@ class Follow
 	property :id,	Serial
 	property :user_id,	Numeric
 	property :follower_id,	Numeric
+
 
 end
 
